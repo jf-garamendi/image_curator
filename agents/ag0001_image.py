@@ -61,7 +61,7 @@ class Ag001_Image(BaseAgent):
         self.data_loaders = self.build_dataLoaders(config.dataset)
 
         # optimizers
-        self.optimizer = self.build_optimizer(config.optimizer)
+        self.optimizer, self.lr_scheduler = self.build_optimizer(config.optimizer)
 
         # define loss
         self.losses_fn, self.losses_weight = self.build_losses(config.losses)
@@ -132,10 +132,14 @@ class Ag001_Image(BaseAgent):
         #optimizer = globals()[optim_config.optim]
 
         optimizer =  torch.optim.SGD(self.model.parameters(), lr=optim_config.lr, momentum=optim_config.momentum)
-        # Decay LR by a factor of 0.1 every 7 epochs
-        #exp_lr_scheduler = lr_scheduler.StepLR(optimizer, step_size=7, gamma=0.1)
 
-        return optimizer
+        # Decay LR by a factor of 0.1 every 7 epochs
+        if not hasattr(optim_config, 'gamma_decay'):
+            optim_config.gamma_decay = 1
+
+        exp_lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=4, gamma=optim_config.gamma_decay)
+
+        return optimizer, exp_lr_scheduler
 
     def build_losses(self, loss_config):
 
@@ -219,17 +223,22 @@ class Ag001_Image(BaseAgent):
 
                 with torch.set_grad_enabled(phase=='train'):
                     loss, acc = self.run_one_epoch(data_loader=self.data_loaders[phase], phase=phase)
+                    self.lr_scheduler.step()
+
 
                 print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, loss, acc))
 
                 self.TB_writer.add_scalar('Loss: ' + phase, loss, epoch)
                 self.TB_writer.add_scalar('Accuracy: ' + phase, acc, epoch)
+                self.TB_writer.add_scalar('LR: ', self.lr_scheduler.get_lr(), epoch)
 
 
                 if phase=='val' and acc > self.best_acc:
                     self.best_acc = acc
 
                     self.save_checkpoint(self.checkpoint_filename)
+
+
 
 
 

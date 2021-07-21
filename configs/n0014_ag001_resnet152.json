@@ -1,5 +1,5 @@
 {
-  "exp_name": "n0009_Ag001_resnet152",
+  "exp_name": "n0014_Ag001_resnet152",
   "out_root_dir": "experiments/",
 
   "general": {
@@ -34,13 +34,14 @@
 
   "optimizer": {
     "lr": 0.001,
-    "momentum": 0.9
+    "momentum": 0.9,
+    "gamma_decay": 0.1
   },
 
   "losses": {
     "fn" : ["Weighted_Focal_Loss"],
     "weights" : [1],
-    "gamma" : 2
+    "gamma" : 1
   }
 
 }

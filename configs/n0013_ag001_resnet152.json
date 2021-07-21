@@ -1,5 +1,5 @@
 {
-  "exp_name": "n0009_Ag001_resnet152",
+  "exp_name": "n0013_Ag001_resnet152",
   "out_root_dir": "experiments/",
 
   "general": {
@@ -33,8 +33,9 @@
   },
 
   "optimizer": {
-    "lr": 0.001,
-    "momentum": 0.9
+    "lr": 0.00001,
+    "momentum": 0.9,
+    "gamma_decay": 0.1
   },
 
   "losses": {
