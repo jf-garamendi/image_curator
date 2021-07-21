@@ -35,7 +35,8 @@
   "optimizer": {
     "lr": 0.001,
     "momentum": 0.9,
-    "gamma_decay": 0.1
+    "gamma_decay": 0.1,
+    "decay_after_epochs" : 4
   },
 
   "losses": {

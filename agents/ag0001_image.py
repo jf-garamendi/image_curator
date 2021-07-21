@@ -136,8 +136,9 @@ class Ag001_Image(BaseAgent):
         # Decay LR by a factor of 0.1 every 7 epochs
         if not hasattr(optim_config, 'gamma_decay'):
             optim_config.gamma_decay = 1
+            optim_config.decay_after_epochs = 1000
 
-        exp_lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=4, gamma=optim_config.gamma_decay)
+        exp_lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=optim_config.decay_after_epochs, gamma=optim_config.gamma_decay)
 
         return optimizer, exp_lr_scheduler
 
