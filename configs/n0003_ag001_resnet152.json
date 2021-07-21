@@ -1,0 +1,45 @@
+{
+  "exp_name": "n0003_Ag001_resnet152",
+  "out_root_dir": "experiments/",
+
+  "general": {
+    "agent": "Ag001_Image",
+    "mode": "train",
+    "device": "cuda",
+    "seed": 42
+  },
+
+  "model": {
+    "model": "PreTrainedPytorchModel",
+    "model_name": "resnet152"
+  },
+
+  "training": {
+    "total_epochs": 50
+  },
+
+  "dataset": {
+    "root_dir":"~/data/built/bonprix/train",
+    "perc_val": 0.1,
+    "batch_size": 2,
+    "num_workers": 8,
+    "H": 1024,
+    "W": 1024 
+  },
+
+
+  "checkpoint": {
+    "checkpoint_filename" : "checkpoint.tar"
+  },
+
+  "optimizer": {
+    "lr": 0.001,
+    "momentum": 0.9
+  },
+
+  "losses": {
+    "fn" : ["CrossEntropyLoss"],
+    "weights" : [1]
+  }
+
+}
