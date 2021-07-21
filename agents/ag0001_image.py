@@ -231,7 +231,7 @@ class Ag001_Image(BaseAgent):
 
                 self.TB_writer.add_scalar('Loss: ' + phase, loss, epoch)
                 self.TB_writer.add_scalar('Accuracy: ' + phase, acc, epoch)
-                self.TB_writer.add_scalar('LR: ', self.lr_scheduler.get_lr(), epoch)
+                self.TB_writer.add_scalar('LR: ', self.lr_scheduler.get_lr()[0], epoch)
 
 
                 if phase=='val' and acc > self.best_acc:
