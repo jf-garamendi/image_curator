@@ -14,8 +14,8 @@
 #python main.py configs/n0009_ag001_resnet152.json
 #python main.py configs/n0010_ag001_resnet152.json
 #python main.py configs/n0011_ag001_resnet152.json
-python main.py configs/n0012_ag001_resnet152.json
 python main.py configs/n0013_ag001_resnet152.json
 python main.py configs/n0014_ag001_resnet152.json
 python main.py configs/n0015_ag001_resnet152.json
 python main.py configs/n0016_ag001_resnet152.json
+python main.py configs/n0012_ag001_resnet152.json
