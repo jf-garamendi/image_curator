@@ -293,6 +293,9 @@ class Ag001_Image(BaseAgent):
         :return:
         """
         self.logger.info("Finalize the model after " + str(self.current_epoch) + " epochs of training, with best accuracy of " + str(self.best_acc))
+        print(
+            "Finalize the model after " + str(self.current_epoch) + " epochs of training, with best accuracy of " + str(
+                self.best_acc))
 
         if exists(self.checkpoint_filename):
             self.visualize_model(num_images=6)
