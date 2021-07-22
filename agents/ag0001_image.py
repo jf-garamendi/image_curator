@@ -138,7 +138,7 @@ class Ag001_Image(BaseAgent):
             optim_config.gamma_decay = 1
             optim_config.decay_after_epochs = 1000
 
-        exp_lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=optim_config.decay_after_epochs, gamma=optim_config.gamma_decay)
+        exp_lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=optim_config.decay_after_epochs, gamma=optim_config.gamma_decay, verbose=True)
 
         return optimizer, exp_lr_scheduler
 
@@ -224,14 +224,12 @@ class Ag001_Image(BaseAgent):
 
                 with torch.set_grad_enabled(phase=='train'):
                     loss, acc = self.run_one_epoch(data_loader=self.data_loaders[phase], phase=phase)
-                    self.lr_scheduler.step()
 
 
                 print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, loss, acc))
 
                 self.TB_writer.add_scalar('Loss: ' + phase, loss, epoch)
                 self.TB_writer.add_scalar('Accuracy: ' + phase, acc, epoch)
-                self.TB_writer.add_scalar('LR: ', self.lr_scheduler.get_lr()[0], epoch)
 
 
                 if phase=='val' and acc > self.best_acc:
@@ -240,6 +238,8 @@ class Ag001_Image(BaseAgent):
                     self.save_checkpoint(self.checkpoint_filename)
 
 
+            self.TB_writer.add_scalar('LR: ', self.optimizer.param_groups[0]['lr'], epoch)
+            self.lr_scheduler.step()
 
 
 
