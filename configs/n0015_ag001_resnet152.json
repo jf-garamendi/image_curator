@@ -15,7 +15,7 @@
   },
 
   "training": {
-    "total_epochs": 50
+    "total_epochs": 30
   },
 
   "dataset": {
@@ -35,7 +35,7 @@
   "optimizer": {
     "lr": 0.001,
     "momentum": 0.9,
-    "gamma_decay": 0.72,
+    "gamma_decay": 0.3,
     "decay_after_epochs" : 1 
   },
 

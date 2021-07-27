@@ -15,14 +15,14 @@
 #python main.py configs/n0010_ag001_resnet152.json
 #python main.py configs/n0011_ag001_resnet152.json
 
-python main.py configs/n0017_ag001_resnet152.json
-python main.py configs/n0018_ag001_resnet152.json
-python main.py configs/n0019_ag001_resnet152.json
-python main.py configs/n0020_ag001_resnet152.json
-python main.py configs/n0021_ag001_resnet152.json
+#python main.py configs/n0017_ag001_resnet152.json
+#python main.py configs/n0018_ag001_resnet152.json
+#python main.py configs/n0019_ag001_resnet152.json
+#python main.py configs/n0020_ag001_resnet152.json
+#python main.py configs/n0021_ag001_resnet152.json
 
-#python main.py configs/n0013_ag001_resnet152.json
-#python main.py configs/n0014_ag001_resnet152.json
-#python main.py configs/n0015_ag001_resnet152.json
-#python main.py configs/n0016_ag001_resnet152.json
+python main.py configs/n0013_ag001_resnet152.json
+python main.py configs/n0014_ag001_resnet152.json
+python main.py configs/n0015_ag001_resnet152.json
+python main.py configs/n0016_ag001_resnet152.json
 #python main.py configs/n0012_ag001_resnet152.json
