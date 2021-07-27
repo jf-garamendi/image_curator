@@ -15,7 +15,7 @@
   },
 
   "training": {
-    "total_epochs": 50
+    "total_epochs": 30
   },
 
   "dataset": {

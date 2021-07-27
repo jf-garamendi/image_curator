@@ -15,7 +15,7 @@
   },
 
   "training": {
-    "total_epochs": 50
+    "total_epochs": 30
   },
 
   "dataset": {
@@ -40,7 +40,7 @@
   "losses": {
     "fn" : ["Weighted_Focal_Loss"],
     "weights" : [1],
-    "gamma" : 1
+    "gamma" : 3
   }
 
 }
