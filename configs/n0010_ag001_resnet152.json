@@ -1,5 +1,5 @@
 {
-  "exp_name": "n00010_Ag001_resnet152",
+  "exp_name": "n0010_Ag001_resnet152",
   "out_root_dir": "experiments/",
 
   "general": {
