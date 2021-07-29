@@ -1,0 +1,48 @@
+{
+  "exp_name": "n0027_Ag001_vgg16_bn",
+  "out_root_dir": "experiments/",
+
+  "general": {
+    "agent": "Ag001_Image",
+    "mode": "train",
+    "device": "cuda",
+    "seed": 42
+  },
+
+  "model": {
+    "model": "PreTrainedPytorchModel",
+    "model_name": "vgg16_bn"
+  },
+
+  "training": {
+    "total_epochs": 30
+  },
+
+  "dataset": {
+    "root_dir":"~/data/built/bonprix/train",
+    "perc_val": 0.1,
+    "batch_size": 4,
+    "num_workers": 8,
+    "H": 512,
+    "W": 512
+  },
+
+
+  "checkpoint": {
+    "checkpoint_filename" : "checkpoint.tar"
+  },
+
+  "optimizer": {
+    "lr": 0.001,
+    "momentum": 0.9,
+    "gamma_decay": 0.3,
+    "decay_after_epochs" : 1
+  },
+
+  "losses": {
+    "fn" : ["Weighted_Focal_Loss"],
+    "weights" : [1],
+    "gamma" : 3
+  }
+
+}
