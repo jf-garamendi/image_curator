@@ -42,7 +42,7 @@
   "losses": {
     "fn" : ["Weighted_Focal_Loss"],
     "weights" : [1],
-    "gamma" : 1
+    "gamma" : 3
   }
 
 }

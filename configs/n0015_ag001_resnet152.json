@@ -1,5 +1,5 @@
 {
-  "exp_name": "n0014_Ag001_resnet152",
+  "exp_name": "n0015_Ag001_resnet152",
   "out_root_dir": "experiments/",
 
   "general": {
@@ -42,7 +42,7 @@
   "losses": {
     "fn" : ["Weighted_Focal_Loss"],
     "weights" : [1],
-    "gamma" : 2
+    "gamma" : 4
   }
 
 }
