@@ -259,7 +259,7 @@ class Ag001_Image(BaseAgent):
         running_corrects = 0
         for inputs, labels in tqdm(data_loader, leave=False, desc=phase):
             inputs = inputs.to(self.device)
-            labels = labels.to(self.device)
+            labels = labels.float().to(self.device)
 
             # zero the parameter gradients
             self.optimizer.zero_grad()
