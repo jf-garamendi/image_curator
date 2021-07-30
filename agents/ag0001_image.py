@@ -21,6 +21,7 @@ from utils.misc import print_cuda_statistics
 from utils.dirs import create_dirs
 from torchvision import transforms, datasets
 from torch.nn import *
+from torch.optim import *
 from torch.utils.data import DataLoader, SubsetRandomSampler
 cudnn.benchmark = True
 from utils.misc import imshow
@@ -129,9 +130,12 @@ class Ag001_Image(BaseAgent):
         return dataloaders
 
     def build_optimizer(self, optim_config):
-        #optimizer = globals()[optim_config.optim]
+        if not hasattr(optim_config, 'optim_name'):
+            optim_config.optim_name = 'SGD'
 
-        optimizer =  torch.optim.SGD(self.model.parameters(), lr=optim_config.lr, momentum=optim_config.momentum)
+        optimizer = globals()[optim_config.optim_name]
+
+        optimizer =  optimizer(self.model.parameters(), lr=optim_config.lr, momentum=optim_config.momentum)
 
         # Decay LR by a factor of 0.1 every 7 epochs
         if not hasattr(optim_config, 'gamma_decay'):
