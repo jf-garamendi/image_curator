@@ -135,7 +135,7 @@ class Ag001_Image(BaseAgent):
 
         optimizer = globals()[optim_config.optim_name]
 
-        optimizer =  optimizer(self.model.parameters(), lr=optim_config.lr, momentum=optim_config.momentum)
+        optimizer =  optimizer(self.model.parameters(), **optim_config.optim_param)
 
         # Decay LR by a factor of 0.1 every 7 epochs
         if not hasattr(optim_config, 'gamma_decay'):
