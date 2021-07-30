@@ -2,6 +2,7 @@
 
 import torch.nn as nn
 from torchvision.models import *
+from torch import squeeze
 
 class Resnet_001(nn.Module):
     def __init__(self, model_name):
@@ -27,7 +28,7 @@ class Resnet_001(nn.Module):
 
 
     def forward(self, x):
-        return self.backbone(x)
+        return squeeze(self.backbone(x))
 
 
 
