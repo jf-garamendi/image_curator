@@ -1,17 +1,18 @@
 {
-  "exp_name": "n0029_Ag001_resnet152",
+  "exp_name": "n0029_Ag003_resnet152",
   "out_root_dir": "experiments/",
 
   "general": {
-    "agent": "Ag001_Image",
+    "agent": "Ag003_Image",
     "mode": "train",
     "device": "cuda",
     "seed": 42
   },
 
   "model": {
-    "model": "PreTrainedPytorchModel",
-    "model_name": "resnet152"
+    "model": "Resnet_001",
+    "model_name": "resnet152",
+    "type": "fine_tuning"
   },
 
   "training": {
@@ -33,18 +34,18 @@
   },
 
   "optimizer": {
-    "optim_name": "Adam",
+    "optim_name": "SGD",
     "optim_param": {
-      "lr": 0.001
+      "lr": 0.001,
+      "momentum": 0.9
     },
     "gamma_decay": 1,
     "decay_after_epochs" : 100
   },
 
   "losses": {
-    "fn" : ["Weighted_Focal_Loss"],
-    "weights" : [1],
-    "gamma" : 3
+    "fn" : ["Binary_Cross_Entropy"],
+    "weights" : [1]
   }
 
 }

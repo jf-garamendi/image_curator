@@ -13,7 +13,6 @@
     "model": "Resnet_000",
     "model_name": "resnet152",
     "type": "fine_tuning"
-
   },
 
   "training": {
