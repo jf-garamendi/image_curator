@@ -7,7 +7,7 @@ import torch.nn as nn
 
 
 class BinaryCrossEntropy(nn.Module):
-    def __init__(self):
+    def __init__(self, config=None):
         super().__init__()
         self.loss = nn.BCELoss()
 

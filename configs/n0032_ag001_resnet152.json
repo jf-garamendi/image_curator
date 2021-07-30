@@ -1,19 +1,17 @@
 {
-  "exp_name": "n0031_Ag003_resnet152",
+  "exp_name": "n0032_Ag001_resnet152",
   "out_root_dir": "experiments/",
 
   "general": {
-    "agent": "Ag003_Image",
+    "agent": "Ag001_Image",
     "mode": "train",
     "device": "cuda",
     "seed": 42
   },
 
   "model": {
-    "model": "Resnet_000",
-    "model_name": "resnet152",
-    "type": "fine_tuning"
-
+    "model": "PreTrainedPytorchModel",
+    "model_name": "resnet152"
   },
 
   "training": {
@@ -21,7 +19,7 @@
   },
 
   "dataset": {
-    "root_dir":"~/data/built/bonprix/train",
+    "root_dir":"/home/gpi/workspace/data/datasets/built/bonprix",
     "perc_val": 0.1,
     "batch_size": 4,
     "num_workers": 8,
@@ -43,10 +41,10 @@
     "decay_after_epochs" : 1
   },
 
+
   "losses": {
-    "fn" : ["Weighted_Focal_Loss"],
-    "weights" : [1],
-    "gamma" : 3
+    "fn" : ["BinaryCrossEntropy"],
+    "weights" : [1]
   }
 
 }
