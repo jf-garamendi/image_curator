@@ -34,8 +34,9 @@
 
   "optimizer": {
     "optim_name": "Adam",
-    "lr": 0.001,
-    "momentum": 0.9,
+    "optim_param": {
+      "lr": 0.001
+    },
     "gamma_decay": 1,
     "decay_after_epochs" : 100
   },
