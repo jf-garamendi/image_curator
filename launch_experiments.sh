@@ -31,9 +31,16 @@
 # python main.py configs/n0012_ag001_resnet152.json
 
 # Exp 5
-python main.py configs/n0023_ag001_resnext101_32x8d.json
-python main.py configs/n0024_ag001_wide_resnet101_2.json
-python main.py configs/n0025_ag001_inception_v3.json
-python main.py configs/n0026_ag001_densenet161.json
-python main.py configs/n0027_ag001_vgg16_bn.json
-python main.py configs/n0028_ag001_mnasnet1_0.json
+#python main.py configs/n0024_ag001_wide_resnet101_2.json
+#python main.py configs/n0023_ag001_resnext101_32x8d.json
+#python main.py configs/n0025_ag001_inception_v3.json
+#python main.py configs/n0026_ag001_densenet161.json
+#python main.py configs/n0027_ag001_vgg16_bn.json
+#python main.py configs/n0028_ag001_mnasnet1_0.json
+
+#Exp 9 
+python main.py configs/n0031_ag003_resnet152.json
+
+# Exp 8
+python main.py configs/n0029_ag001_resnet152.json
+python main.py configs/n0030_ag001_resnet152.json

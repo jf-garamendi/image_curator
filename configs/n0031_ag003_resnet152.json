@@ -36,11 +36,9 @@
 
   "optimizer": {
     "optim_param": {
-      "lr": 0.001,
+      "lr": 0.0001,
       "momentum": 0.9
-    },
-    "gamma_decay": 0.3,
-    "decay_after_epochs" : 1
+    }
   },
 
   "losses": {
