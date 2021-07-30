@@ -42,7 +42,7 @@
   },
 
   "losses": {
-    "fn" : ["BinaryCrossEntropy"],
+    "fn" : ["Binary_Cross_Entropy"],
     "weights" : [1]
   }
 
