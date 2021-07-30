@@ -1,5 +1,5 @@
 
-
+from torch import squeeze
 import torch.nn as nn
 from torchvision.models import *
 
@@ -15,10 +15,11 @@ class Resnet_000(nn.Module):
 
         num_ftrs = self.model.fc.in_features
 
-        self.model.fc = nn.Linear(num_ftrs, nClasses)
+        self.model.fc = nn.Sequential(nn.Linear(num_ftrs, 1),
+                                      nn.Sigmoid())
 
     def forward(self, x):
-        return self.model(x)
+        return squeeze(self.model(x))
 
 
 

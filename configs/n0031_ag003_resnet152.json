@@ -36,15 +36,14 @@
 
   "optimizer": {
     "optim_param": {
-      "lr": 0.0001,
+      "lr": 0.001,
       "momentum": 0.9
     }
   },
 
   "losses": {
-    "fn" : ["Weighted_Focal_Loss"],
-    "weights" : [1],
-    "gamma" : 3
+    "fn" : ["BinaryCrossEntropy"],
+    "weights" : [1]
   }
 
 }

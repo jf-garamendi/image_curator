@@ -77,6 +77,7 @@ class Ag003_Image(Ag001_Image):
                     epochs_without_improving += 1
 
                     if (not already_reset) and (self.training_type == 'fine_tuning') and (epochs_without_improving > 5):
+                        already_reset = True
                         self.optimizer.param_groups[0]['lr'] = self.initial_lr
                         for param in self.model.parameters():
                             param.requires_grad = True
@@ -84,10 +85,39 @@ class Ag003_Image(Ag001_Image):
                         self.logger.info('Unfreeze backbone \n')
 
 
-
-
             self.TB_writer.add_scalar('LR: ', self.optimizer.param_groups[0]['lr'], epoch)
             self.lr_scheduler.step()
 
+    def run_one_epoch(self, data_loader, phase=''):
+        """
+        One epoch of training
+        :return:
+        """
+        running_loss = 0.0
+        running_corrects = 0
+        for inputs, labels in tqdm(data_loader, leave=False, desc=phase):
+            inputs = inputs.to(self.device)
+            labels = labels.float().to(self.device)
 
+            # zero the parameter gradients
+            self.optimizer.zero_grad()
 
+            # Forward pass.
+            outputs = self.model(inputs)
+
+            loss = 0  # torch.tensor(0.0).to(self.device)
+            for loss_fn, loss_weight in zip(self.losses_fn, self.losses_weight):
+                loss += torch.tensor(loss_weight).to(self.device) * loss_fn(outputs, labels)
+
+            if phase == 'train':
+                loss.backward()
+                self.optimizer.step()
+
+            # statistics
+            running_loss += loss.item() * inputs.size(0)
+            preds = (outputs > 0.5)
+            running_corrects += torch.sum(preds == labels.data)
+
+        epoch_loss = running_loss / (len(data_loader) * self.batch_size)
+        epoch_acc = running_corrects.item() / (len(data_loader) * self.batch_size)
+        return epoch_loss, epoch_acc
