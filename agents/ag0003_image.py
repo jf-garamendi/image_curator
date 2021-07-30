@@ -81,6 +81,8 @@ class Ag003_Image(Ag001_Image):
                         for param in self.model.parameters():
                             param.requires_grad = True
 
+                        self.logger.info('Unfreeze backbone \n')
+
 
 
 

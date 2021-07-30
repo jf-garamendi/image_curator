@@ -141,6 +141,7 @@ class Ag001_Image(BaseAgent):
         if not hasattr(optim_config, 'gamma_decay'):
             optim_config.gamma_decay = 1
             optim_config.decay_after_epochs = 1000
+            self.logger.info('No decay for Learning rate \n')
 
         exp_lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=optim_config.decay_after_epochs, gamma=optim_config.gamma_decay, verbose=True)
 
