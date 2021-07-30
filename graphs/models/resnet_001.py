@@ -15,9 +15,11 @@ class Resnet_001(nn.Module):
         for param in self.backbone.parameters():
             param.requires_grad = False
 
+        num_ftrs = self.model.fc.in_features
+
         self.backbone.avgpool = nn.AdaptiveAvgPool2d(output_size=(1,1))
         self.backbone.fc = nn.Sequential(nn.Flatten(),
-                                 nn.Linear(512, 128),
+                                 nn.Linear(num_ftrs, 128),
                                  nn.ReLU(),
                                  nn.Dropout(0.2),
                                  nn.Linear(128,1),
