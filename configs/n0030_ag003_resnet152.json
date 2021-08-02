@@ -1,9 +1,9 @@
 {
-  "exp_name": "n0030_Ag001_resnet152",
+  "exp_name": "n0030_Ag003_resnet152",
   "out_root_dir": "experiments/",
 
   "general": {
-    "agent": "Ag001_Image",
+    "agent": "Ag003_Image",
     "mode": "train",
     "device": "cuda",
     "seed": 42
