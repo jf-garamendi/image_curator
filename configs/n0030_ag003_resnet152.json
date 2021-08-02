@@ -10,7 +10,7 @@
   },
 
   "model": {
-    "model": "resnet_000",
+    "model": "Resnet_000",
     "model_name": "resnet152"
   },
 
