@@ -60,7 +60,7 @@ class Ag004_Image(Ag003_Image):
 
         return optimizer, scheduler
 
-    
+
 
     def train(self):
         """

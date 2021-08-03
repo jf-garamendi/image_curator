@@ -28,7 +28,8 @@ class Resnet_001(nn.Module):
 
 
     def forward(self, x):
-        return squeeze(self.backbone(x))
+        output = self.backbone(x)
+        return squeeze(output, dim=1)
 
 
 
