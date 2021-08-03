@@ -43,16 +43,17 @@ class Ag004_Image(Ag003_Image):
 
         optimizer =  optimizer(self.model.parameters(), **optim_config.optim_param)
 
-        # Decay LR by a factor of 0.1 every 7 epochs
+
         if not hasattr(optim_config, 'gamma_decay'):
-            optim_config.gamma_decay = 1
-            optim_config.decay_after_epochs = 1000
+            optim_config.factor_decay = 1
+
             self.logger.info('No decay for Learning rate \n')
 
         scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer,
                                                                mode="max",
                                                                factor = optim_config.factor_decay,
                                                                min_lr= optim_config.min_lr,
+                                                               patience= optim_config.patience,
                                                                verbose = True)
 
         return optimizer, scheduler
