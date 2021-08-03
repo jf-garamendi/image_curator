@@ -10,7 +10,7 @@
   },
 
   "model": {
-    "model": "Resnet_000",
+    "model": "Resnet_001",
     "model_name": "resnet152",
     "type": "fine_tuning"
   },
@@ -44,8 +44,10 @@
   },
 
   "losses": {
-    "fn" : ["Binary_Cross_Entropy"],
-    "weights" : [1]
+    "fn" : ["Weighted_Focal_Loss"],
+    "weights" : [1],
+    "gamma" : 3,
+    "alpha": 0.6159
   }
 
 }
