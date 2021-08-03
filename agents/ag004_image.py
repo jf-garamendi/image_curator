@@ -22,6 +22,7 @@ from utils.misc import print_cuda_statistics
 from utils.dirs import create_dirs
 from torchvision import transforms, datasets
 from torch.nn import *
+from torch.optim import *
 from torch.utils.data import DataLoader, SubsetRandomSampler
 cudnn.benchmark = True
 from utils.misc import imshow
@@ -44,8 +45,9 @@ class Ag004_Image(Ag003_Image):
         optimizer =  optimizer(self.model.parameters(), **optim_config.optim_param)
 
 
-        if not hasattr(optim_config, 'gamma_decay'):
-            optim_config.factor_decay = 1
+        if not hasattr(optim_config, 'factor_decay'):
+            optim_config.factor_decay = 0.9
+            optim_confic.min_lr = optim_config.optim_param.lr
 
             self.logger.info('No decay for Learning rate \n')
 
