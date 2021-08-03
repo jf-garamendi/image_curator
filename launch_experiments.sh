@@ -38,6 +38,7 @@
 #python main.py configs/n0027_ag001_vgg16_bn.json
 #python main.py configs/n0028_ag001_mnasnet1_0.json
 
+python main.py configs/n0033_ag004_resnet152.json
+python main.py configs/n0032_ag004_resnet152.json
 python main.py configs/n0029_ag003_resnet152.json
-python main.py configs/n0030_ag003_resnet152.json
-python main.py configs/n0031_ag003_resnet152.json
+#python main.py configs/n0030_ag003_resnet152.json
