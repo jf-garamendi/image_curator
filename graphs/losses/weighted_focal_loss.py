@@ -22,13 +22,15 @@ class Weighted_Focal_Loss(nn.Module):
 
 
 
-        self.alpha = torch.tensor([config.alpha, 1-config.alpha]).cuda()
+        self.alpha = torch.tensor([1-config.alpha, config.alpha]).cuda()
         self.gamma = config.gamma
-        self.loss = F.cross_entropy
+        self.loss = nn.BCELoss(reduction='none')
 
     def forward(self, inputs, targets):
-        BCE_loss = self.loss(inputs, targets, reduction='none')
+        BCE_loss = self.loss(inputs, targets)
 
         pt = torch.exp(-BCE_loss)
-        F_loss = (1-pt)**self.gamma * BCE_loss
+        idx = targets.long().view(-1)
+        at = self.alpha.gather(0, idx)
+        F_loss = at*(1-pt)**self.gamma * BCE_loss
         return F_loss.mean()
