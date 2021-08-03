@@ -1,0 +1,48 @@
+{
+    "exp_name": "n0036_Ag004_resnext50d_32x4d",
+    "out_root_dir": "experiments/",
+  
+    "general": {
+      "agent": "Ag004_Image",
+      "mode": "train",
+      "device": "cuda",
+      "seed": 42
+    },
+  
+    "model": {
+      "model": "TimmPytorchModel",
+      "model_name": "resnext50d_32x4d"
+    },
+  
+    "training": {
+      "total_epochs": 30
+    },
+  
+    "dataset": {
+      "root_dir": "/media/totolia/datos_3/photoslurp/dataset/images_oriented/bonprix/train",
+      "perc_val": 0.1,
+      "batch_size": 16,
+      "num_workers": 8,
+      "H": 384,
+      "W": 384
+    },
+  
+  
+    "checkpoint": {
+      "checkpoint_filename" : "checkpoint.tar"
+    },
+  
+    "optimizer": {
+      "optim_name": "Adam",
+      "optim_param": {
+        "lr": 0.001
+      }
+    },
+  
+    "losses": {
+      "fn" : ["CrossEntropyLoss"],
+      "weights" : [1]
+    }
+  
+  }
+  
