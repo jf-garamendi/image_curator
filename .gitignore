@@ -1,2 +1,11 @@
+__pycache__/
+**/__pycache__/
+
 
 agents/__pycache__/
+
+experiments/
+
+graphs/losses/__pycache__/
+
+graphs/__pycache__/
