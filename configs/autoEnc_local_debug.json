@@ -1,0 +1,51 @@
+{
+  "exp_name": "autoEnc_debug",
+  "out_root_dir": "experiments/",
+
+  "general": {
+    "agent": "Ag005_autoEnc",
+    "mode": "train",
+    "device": "cuda",
+    "seed": 42
+  },
+
+  "model": {
+    "model": "autoEnc_001"
+  },
+
+  "training": {
+    "total_epochs": 50
+  },
+
+  "dataset": {
+    "root_dir":"~/workspace/data/built/bonprix/train",
+    "root_for_autoEnc": "~/workspace/data/built/bonprix/train/approved",
+    "perc_val": 0.1,
+    "batch_size": 1,
+    "num_workers": 8,
+    "H": 512,
+    "W": 512
+  },
+
+
+  "checkpoint": {
+    "checkpoint_filename" : "checkpoint.tar"
+  },
+
+  "autoEnc_optimizer": {
+    "optim_name": "AdamW",
+    "optim_param": {
+      "lr": 0.001,
+      "weight_decay": 1e-5
+    },
+    "factor_decay": 0.3,
+    "min_lr": 1e-5,
+    "patience": 3
+  },
+
+  "autoEnc_losses": {
+    "fn" : ["MSELoss"],
+    "weights" : [1]
+  }
+
+}

@@ -5,7 +5,7 @@ from torchvision.models import *
 from torch import squeeze
 
 class Resnet_001(nn.Module):
-    def __init__(self, model_name):
+    def __init__(self):
         super().__init__()
 
         self.encoder = nn.Sequential(
@@ -40,16 +40,17 @@ class Resnet_001(nn.Module):
                                  nn.Linear(128,1),
                                  nn.Sigmoid())
 
-    def forward(self, x, which_output = "classification"):
+
+
+
+    def forward(self, x, classify = False):
         #  wich_output: classification or image
 
         output = None
         features = self.encoder(x)
+        output = self.decoder(features)
 
-        if which_output == "image" :
-            output = self.decoder(features)
-
-        elif which_output == "classification":
+        if classify:
             output = self.classifier(features)
             output = squeeze(output, dim=1)
 
