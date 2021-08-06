@@ -30,6 +30,7 @@ class Densenet_000(nn.Module):
         for param in self.backbone.parameters():
             param.requires_grad = False
 
+        '''
         self.backbone.avgpool = nn.AdaptiveAvgPool2d(output_size=(1,1))
         self.backbone.classifier = nn.Sequential(nn.Flatten(),
                                  nn.Linear(512, 128),
@@ -37,7 +38,10 @@ class Densenet_000(nn.Module):
                                  nn.Dropout(0.2),
                                  nn.Linear(128,1),
                                  nn.Sigmoid())
-
+        '''
+        num_ftrs = self.backbone.classifier.in_features
+        self.backbone.classifier = nn.Sequential(nn.Linear(num_ftrs, 1),
+                                                 nn.Sigmoid())
 
     def forward(self, x):
         output = self.backbone(x)
