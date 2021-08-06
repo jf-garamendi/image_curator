@@ -68,7 +68,15 @@ class Ag004_Image(Ag003_Image):
         :return:
         """
         epochs_without_improving = 0
-        already_reset = False
+        train_complete_model = False
+
+        if (self.training_type == 'scratch'):
+            train_complete_model = True
+
+            for param in self.model.parameters():
+                param.requires_grad = True
+
+
         for epoch in range(self.current_epoch+1, self.total_epochs+1):
             self.current_epoch = epoch
             print('Epoch {}/{}'.format(epoch, self.total_epochs ))
@@ -105,8 +113,8 @@ class Ag004_Image(Ag003_Image):
                         epochs_without_improving += 1
                         self.logger.info('epochs to Unfreeze backbone' + str(5-epochs_without_improving) + '\n')
 
-                        if (not already_reset) and (self.training_type == 'fine_tuning') and (epochs_without_improving > 5):
-                            already_reset = True
+                        if (not train_complete_model) and (self.training_type == 'fine_tuning') and (epochs_without_improving > 5):
+                            train_complete_model = True
                             self.optimizer.param_groups[0]['lr'] = self.initial_lr
                             for param in self.model.parameters():
                                 param.requires_grad = True

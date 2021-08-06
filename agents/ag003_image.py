@@ -43,7 +43,18 @@ class Ag003_Image(Ag001_Image):
         :return:
         """
         epochs_without_improving = 0
-        already_reset = False
+        train_complete_model = False
+
+        if (self.training_type == 'scratch'):
+            train_complete_model = True
+
+            for param in self.model.parameters():
+                param.requires_grad = True
+                self.logger.info('Training from scratch \n')
+
+
+
+
         for epoch in range(self.current_epoch+1, self.total_epochs+1):
             self.current_epoch = epoch
             print('Epoch {}/{}'.format(epoch, self.total_epochs ))
@@ -76,8 +87,8 @@ class Ag003_Image(Ag001_Image):
                 else:
                     epochs_without_improving += 1
 
-                    if (not already_reset) and (self.training_type == 'fine_tuning') and (epochs_without_improving > 5):
-                        already_reset = True
+                    if (not train_complete_model) and (self.training_type == 'fine_tuning') and (epochs_without_improving > 5):
+                        train_complete_model = True
                         self.optimizer.param_groups[0]['lr'] = self.initial_lr
                         for param in self.model.parameters():
                             param.requires_grad = True

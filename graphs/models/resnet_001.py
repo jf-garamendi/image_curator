@@ -5,11 +5,16 @@ from torchvision.models import *
 from torch import squeeze
 
 class Resnet_001(nn.Module):
-    def __init__(self, model_name):
+    def __init__(self, model_name, train_mode="fine_tuning"):
+        # train_mode: "fine_tuning", "scratch"
         super().__init__()
 
         model = globals()[model_name]
-        self.backbone = model(pretrained=True)
+        pretrain = not (train_mode == "scratch")
+        if not pretrain:
+            self.logger.info('Training from scratch \n')
+
+        self.backbone = model(pretrained=pretrain)
 
         # Freeze parameters. LAter, in the agent will be unfreeze depending if the model is training for transfer learning
         # or fine tuning
