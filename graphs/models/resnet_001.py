@@ -12,7 +12,7 @@ class Resnet_001(nn.Module):
         model = globals()[model_name]
         pretrain = not (train_mode == "scratch")
         self.backbone = model(pretrained=pretrain)
-        
+
         if pretrain:
             # Freeze parameters. LAter, in the agent will be unfreeze depending if the model is training for transfer learning
             # or fine tuning
