@@ -11,15 +11,19 @@ class Resnet_001(nn.Module):
 
         model = globals()[model_name]
         pretrain = not (train_mode == "scratch")
-        if not pretrain:
+        self.backbone = model(pretrained=pretrain)
+        
+        if pretrain:
+            # Freeze parameters. LAter, in the agent will be unfreeze depending if the model is training for transfer learning
+            # or fine tuning
+            for param in self.backbone.parameters():
+                param.requires_grad = False
+        else:
             self.logger.info('Training from scratch \n')
 
-        self.backbone = model(pretrained=pretrain)
 
-        # Freeze parameters. LAter, in the agent will be unfreeze depending if the model is training for transfer learning
-        # or fine tuning
-        for param in self.backbone.parameters():
-            param.requires_grad = False
+
+
 
         num_ftrs = self.backbone.fc.in_features
 
