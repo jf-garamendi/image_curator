@@ -1,4 +1,4 @@
-
+import logging
 
 import torch.nn as nn
 from torchvision.models import *
@@ -8,6 +8,7 @@ class Resnet_001(nn.Module):
     def __init__(self, model_name, train_mode="fine_tuning"):
         # train_mode: "fine_tuning", "scratch"
         super().__init__()
+        self.logger = logging.getLogger("Resnet_001 Model")
 
         model = globals()[model_name]
         pretrain = not (train_mode == "scratch")

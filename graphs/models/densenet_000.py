@@ -1,4 +1,4 @@
-
+import logging
 
 import torch.nn as nn
 from torchvision.models import *
@@ -7,6 +7,8 @@ from torch import squeeze
 class Densenet_000(nn.Module):
     def __init__(self, model_name, train_mode="fine_tuning"):
         super().__init__()
+
+        self.logger = logging.getLogger("Densenet_000 Model")
 
         model = globals()[model_name]
         pretrain = not (train_mode == "scratch")
