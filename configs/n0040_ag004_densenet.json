@@ -1,5 +1,5 @@
 {
-  "exp_name": "n0034_Ag004_resnet152",
+  "exp_name": "n0040_Ag004_densenet",
   "out_root_dir": "experiments/",
 
   "general": {
@@ -10,8 +10,8 @@
   },
 
   "model": {
-    "model": "Resnet_001",
-    "model_name": "resnet152",
+    "model": "densenet_000",
+    "model_name": "densenet121",
     "type": "fine_tuning"
   },
 
@@ -49,5 +49,4 @@
     "gamma" : 3,
     "alpha": 0.6159
   }
-
 }
