@@ -10,6 +10,8 @@ class Densenet_000(nn.Module):
 
         model = globals()[model_name]
         pretrain = not (train_mode == "scratch")
+        self.backbone = model(pretrained=pretrain)
+
         if pretrain:
             # Freeze parameters. LAter, in the agent will be unfreeze depending if the model is training for transfer learning
             # or fine tuning
@@ -18,7 +20,7 @@ class Densenet_000(nn.Module):
         else:
             self.logger.info('Training from scratch \n')
 
-        self.backbone = model(pretrained=pretrain)
+
 
 
         for param in self.backbone.parameters():
