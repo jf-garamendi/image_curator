@@ -18,6 +18,8 @@ class Resnet_001(nn.Module):
             # or fine tuning
             for param in self.backbone.parameters():
                 param.requires_grad = False
+
+            self.logger.info('Freezing convolutional part \n')
         else:
             self.logger.info('Training from scratch \n')
 
