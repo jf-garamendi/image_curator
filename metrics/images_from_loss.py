@@ -24,9 +24,13 @@ from torch.utils.data import DataLoader
 import cv2
 import json
 
-class ImageFolderWithPaths(ImageFolder):
+import sys
+sys.path.append(os.path.dirname(os.path.realpath(__file__)), '../datasets')
+from dataset_with_fixed_classes import CustomImageFolder
+
+class ImageFolderWithPaths(CustomImageFolder):
     def __getitem__(self, index):
-        return super(ImageFolderWithPaths, self).__getitem__(index) + (self.imgs[index][0],)
+        return super(ImageFolderWithPaths, self).__getitem__(index) + (self.imgs[index][0], )
 
 TEST_DIR = '/media/totolia/datos_3/photoslurp/dataset/images_oriented/bonprix/test'
 class FromLoss:
@@ -66,7 +70,7 @@ class FromLoss:
         with torch.no_grad():
             for inputs, labels, paths in tqdm(self.dataloader, leave=False, desc="val"):
                 inputs = inputs.to(self.agent.device)
-                labels = (1 - labels.to(self.agent.device)).float() # approved have to be 1
+                labels = labels.to(self.agent.device).float() # approved have to be 1
                 
                 outputs = self.agent.model(inputs)
                 loss = [float(self.__loss(outputs[i:i+1], labels[i:i+1]).cpu().numpy()) for i in range(inputs.shape[0])]

@@ -26,6 +26,10 @@ from torchvision import transforms
 from torchvision import datasets
 from torch.utils.data import DataLoader
 
+import sys
+sys.path.append(os.path.dirname(os.path.realpath(__file__)), '../datasets')
+from dataset_with_fixed_classes import CustomImageFolder
+
 TEST_DIR = '/media/totolia/datos_3/photoslurp/dataset/images_oriented/bonprix/test'
 class Eval:
     def __init__(self, agent):
@@ -42,7 +46,7 @@ class Eval:
                 transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
             ])
 
-        dataset = datasets.ImageFolder(root = TEST_DIR,
+        dataset = CustomImageFolder(root = TEST_DIR,
                                       transform = image_transforms
                                      )
 
@@ -57,7 +61,7 @@ class Eval:
             gt_list = []
             for inputs, labels in tqdm(self.dataloader, leave=False, desc="val"):
                 inputs = inputs.to(self.agent.device)
-                labels = 1 - labels.to(self.agent.device) # approved have to be 1
+                labels = labels.to(self.agent.device) # approved have to be 1
                 
                 outputs = self.agent.model(inputs)
 
