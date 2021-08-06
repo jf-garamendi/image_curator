@@ -10,7 +10,7 @@
   },
 
   "model": {
-    "model": "densenet_000",
+    "model": "Densenet_000",
     "model_name": "densenet121",
     "type": "fine_tuning"
   },
