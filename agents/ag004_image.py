@@ -47,7 +47,7 @@ class Ag004_Image(Ag003_Image):
 
         if not hasattr(optim_config, 'factor_decay'):
             optim_config.factor_decay = 0.9
-            optim_confic.min_lr = optim_config.optim_param.lr
+            optim_config.min_lr = optim_config.optim_param.lr
 
             self.logger.info('No decay for Learning rate \n')
 
@@ -60,11 +60,23 @@ class Ag004_Image(Ag003_Image):
 
         return optimizer, scheduler
 
+
+
     def train(self):
         """
         Main training loop
         :return:
         """
+        epochs_without_improving = 0
+        train_complete_model = False
+
+        if (self.training_type == 'scratch'):
+            train_complete_model = True
+
+            for param in self.model.parameters():
+                param.requires_grad = True
+
+
         for epoch in range(self.current_epoch+1, self.total_epochs+1):
             self.current_epoch = epoch
             print('Epoch {}/{}'.format(epoch, self.total_epochs ))
@@ -93,9 +105,21 @@ class Ag004_Image(Ag003_Image):
                     self.lr_scheduler.step(acc)
 
                     if acc > self.best_acc:
-                        self.best_acc = acc
+                        epochs_without_improving = 0
 
+                        self.best_acc = acc
                         self.save_checkpoint(self.checkpoint_filename)
+                    else:
+                        epochs_without_improving += 1
+                        self.logger.info('epochs to Unfreeze backbone' + str(5-epochs_without_improving) + '\n')
+
+                        if (not train_complete_model) and (self.training_type == 'fine_tuning') and (epochs_without_improving > 5):
+                            train_complete_model = True
+                            self.optimizer.param_groups[0]['lr'] = self.initial_lr
+                            for param in self.model.parameters():
+                                param.requires_grad = True
+
+                            self.logger.info('Unfreeze backbone \n')
 
 
             self.TB_writer.add_scalar('LR: ', self.optimizer.param_groups[0]['lr'], epoch)

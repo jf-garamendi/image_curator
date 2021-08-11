@@ -79,7 +79,7 @@ class Ag001_Image(BaseAgent):
     # SET FUNCTIONS
     def build_model(self, model_config):
         model = globals()[model_config.model]
-        model = model(model_config.model_name).to(self.device)
+        model = model(model_config.model_name, model_config.type).to(self.device)
 
         return model
     def build_dataLoaders(self, data_config):

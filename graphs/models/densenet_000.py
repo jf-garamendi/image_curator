@@ -4,11 +4,11 @@ import torch.nn as nn
 from torchvision.models import *
 from torch import squeeze
 
-class Resnet_001(nn.Module):
+class Densenet_000(nn.Module):
     def __init__(self, model_name, train_mode="fine_tuning"):
-        # train_mode: "fine_tuning", "scratch"
         super().__init__()
-        self.logger = logging.getLogger("Resnet_001 Model")
+
+        self.logger = logging.getLogger("Densenet_000 Model")
 
         model = globals()[model_name]
         pretrain = not (train_mode == "scratch")
@@ -27,17 +27,21 @@ class Resnet_001(nn.Module):
 
 
 
+        for param in self.backbone.parameters():
+            param.requires_grad = False
 
-        num_ftrs = self.backbone.fc.in_features
-
+        '''
         self.backbone.avgpool = nn.AdaptiveAvgPool2d(output_size=(1,1))
-        self.backbone.fc = nn.Sequential(nn.Flatten(),
-                                 nn.Linear(num_ftrs, 128),
+        self.backbone.classifier = nn.Sequential(nn.Flatten(),
+                                 nn.Linear(512, 128),
                                  nn.ReLU(),
                                  nn.Dropout(0.2),
                                  nn.Linear(128,1),
                                  nn.Sigmoid())
-
+        '''
+        num_ftrs = self.backbone.classifier.in_features
+        self.backbone.classifier = nn.Sequential(nn.Linear(num_ftrs, 1),
+                                                 nn.Sigmoid())
 
     def forward(self, x):
         output = self.backbone(x)

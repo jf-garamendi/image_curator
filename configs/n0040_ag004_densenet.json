@@ -1,5 +1,5 @@
 {
-  "exp_name": "n0032_Ag004_resnet152",
+  "exp_name": "n0040_Ag004_densenet",
   "out_root_dir": "experiments/",
 
   "general": {
@@ -10,8 +10,8 @@
   },
 
   "model": {
-    "model": "Resnet_001",
-    "model_name": "resnet152",
+    "model": "Densenet_000",
+    "model_name": "densenet121",
     "type": "fine_tuning"
   },
 
@@ -22,7 +22,7 @@
   "dataset": {
     "root_dir":"~/data/built/bonprix/train",
     "perc_val": 0.1,
-    "batch_size": 4,
+    "batch_size": 8,
     "num_workers": 8,
     "H": 512,
     "W": 512
@@ -49,5 +49,4 @@
     "gamma" : 3,
     "alpha": 0.6159
   }
-
 }

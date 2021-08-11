@@ -1,5 +1,5 @@
 {
-  "exp_name": "n0032_Ag004_resnet152",
+  "exp_name": "n0036_Ag004_resnet152",
   "out_root_dir": "experiments/",
 
   "general": {
@@ -22,7 +22,7 @@
   "dataset": {
     "root_dir":"~/data/built/bonprix/train",
     "perc_val": 0.1,
-    "batch_size": 4,
+    "batch_size": 14,
     "num_workers": 8,
     "H": 512,
     "W": 512
