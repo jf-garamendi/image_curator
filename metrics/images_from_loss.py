@@ -155,15 +155,19 @@ def main():
     )):
         axs[0, i].imshow(cv2.imread(accept_best_key)[..., ::-1])
         axs[0, i].set_title(f'Accept/Best {accept_best_value:.2f}')
+        axs[0, i].axis('off')
 
         axs[1, i].imshow(cv2.imread(accept_worst_key)[..., ::-1])
         axs[1, i].set_title(f'Accept/Worst {accept_worst_value:.2f}')
+        axs[1, i].axis('off')
 
         axs[2, i].imshow(cv2.imread(reject_best_key)[..., ::-1])
         axs[2, i].set_title(f'Reject/Best {reject_best_value:.2f}')
+        axs[2, i].axis('off')
 
         axs[3, i].imshow(cv2.imread(reject_worst_key)[..., ::-1])
         axs[3, i].set_title(f'Reject/Worse {reject_worst_value:.2f}')
+        axs[3, i].axis('off')
     plt.show(block=True)
 
     print(json.dumps(ev_result, indent=4, sort_keys=True))

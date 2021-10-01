@@ -31,6 +31,7 @@ sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../da
 from dataset_with_fixed_classes import CustomImageFolder
 
 TEST_DIR = '/media/totolia/datos_3/photoslurp/dataset/images_oriented/bonprix/test'
+USE_FIXED_THRESHOLDS = False
 class Eval:
     def __init__(self, agent):
         self.agent = agent
@@ -71,24 +72,27 @@ class Eval:
         pred_list = np.array(pred_list)
         gt_list = np.array(gt_list)
 
-        #precision, recall, thresholds = precision_recall_curve(gt_list, pred_list)
-        #thresholds = np.append(thresholds, [0])
-        precision = []
-        recall = []
-        thresholds = []
-        gt_bool = gt_list > 0
-        for th in np.linspace(0.1, 0.9, 8):
-            p = pred_list > th
-            tp = ((p == gt_bool) & p).sum()
-            fp = ((p != gt_bool) & p).sum()
-            fn = ((p != gt_bool) & ~p).sum()
+        if USE_FIXED_THRESHOLDS:
+            precision = []
+            recall = []
+            thresholds = []
+            gt_bool = gt_list > 0
+            for th in np.linspace(0.1, 0.9, 8):
+                p = pred_list > th
+                tp = ((p == gt_bool) & p).sum()
+                fp = ((p != gt_bool) & p).sum()
+                fn = ((p != gt_bool) & ~p).sum()
 
-            prec = tp / (tp + fp + 1e-9)
-            rec = tp / (tp + fn + 1e-9)
+                prec = tp / (tp + fp + 1e-9)
+                rec = tp / (tp + fn + 1e-9)
 
-            precision.append(prec)
-            recall.append(rec)
-            thresholds.append(th)
+                precision.append(prec)
+                recall.append(rec)
+                thresholds.append(th)
+        else:
+            precision, recall, thresholds = precision_recall_curve(gt_list, pred_list)
+            thresholds = np.append(thresholds, [0])
+        
 
 
         np.set_printoptions(threshold=sys.maxsize, precision=2, suppress=True)
