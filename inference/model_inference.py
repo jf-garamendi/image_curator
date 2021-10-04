@@ -1,12 +1,13 @@
 import torch
 from torchvision import transforms
-import params
 import os
 
 import sys
 sys.path.append(os.path.join(os.path.dirname(os.path.realpath(__file__)), '../'))
 from utils.config import *
-from agents import *
+#from agents import *
+import graphs.models as model_modules
+MODELS = vars(model_modules)
 
 class ModelInference:
     def __init__(
@@ -24,23 +25,26 @@ class ModelInference:
         # parse the config json file
         config = process_config(agent_config_path)
 
-        # Create the Agent and pass all the configuration to it then run it..
-        agent_class = globals()[config.general.agent]
-        self.agent = agent_class(config)
-
         # Device & Half
         self.device = torch.device(device if torch.cuda.is_available() else "cpu")
         self.half = half if self.device != torch.device('cpu') else False
 
+        # Create the Agent and pass all the configuration to it then run it..
+        # agent_class = globals()[config.general.agent]
+        # self.agent = agent_class(config)
+        model_class = MODELS[config.model.model] #globals()[config.model.model]
+        self.model = model_class(config.model.model_name, config.model.type).to(self.device)
+        self.dataset_config = config.dataset
+
         # Move model
-        self.agent.model = self.agent.model.to(self.device)
+        self.model = self.model.to(self.device)
         if self.half:
-            self.agent.model = self.agent.model.half()
-        self.agent.model.eval()
+            self.model = self.model.half()
+        self.model.eval()
 
         # Define Transforms
         self.image_transforms = transforms.Compose([
-            transforms.Resize((self.agent.config.dataset.W, self.agent.config.dataset.H)),
+            transforms.Resize((self.dataset_config.W, self.dataset_config.H)),
             transforms.ToTensor(),
             transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
         ])
@@ -58,8 +62,8 @@ class ModelInference:
             client_weights_path, 
             client_threshold
         ) = self.load_client_callback(client_id)
-        self.agent.model.load_state_dict(torch.load(client_weights_path)['model_state_dict'], strict=True)
-        self.agent.model.eval()
+        self.model.load_state_dict(torch.load(client_weights_path)['model_state_dict'], strict=True)
+        self.model.eval()
         
         results = []
         for batch_start in range(0, len(images), batch_size):
@@ -76,7 +80,7 @@ class ModelInference:
 
             # Inference
             with torch.no_grad():
-                pred_bool = self.agent.model(batch_images) >= client_threshold
+                pred_bool = self.model(batch_images) >= client_threshold
             results += pred_bool.cpu().tolist()
 
         # Save results
